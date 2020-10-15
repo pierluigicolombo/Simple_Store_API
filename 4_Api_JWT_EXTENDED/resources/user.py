@@ -74,7 +74,7 @@ class UserLogin(Resource):
             'refresh_token':refresh_token
             }, 200
 
-        return {'message', 'Invalid credentials'}, 401
+        return {'message': 'Invalid credentials'}, 401
 
 class UserLogout(Resource):
     @jwt_required #required jwt because if the user is not log in he can't log out
@@ -82,7 +82,7 @@ class UserLogout(Resource):
         #the log out is accomplish inserting in the blacklist the token
         jti = get_raw_jwt['jti'] #JTI is "JWT id", a unique indetifier for a JWT
         blacklist.add(jti)
-        RETURN {'message': 'Successfully logged out.'}, 200
+        return {'message': 'Successfully logged out.'}, 200
 
 
 

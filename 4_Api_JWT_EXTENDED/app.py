@@ -1,9 +1,9 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 
 from db import db
-from resources.user import UserRegister, User, UserLogin, UserLogout TokenRefresh
+from resources.user import UserRegister, User, UserLogin, UserLogout, TokenRefresh
 from resources.item import Item, ItemList
 from resources.store import Store, StoreList
 from blacklist import BLACKLIST
@@ -46,32 +46,32 @@ def expired_token_callback():
 		}), 401
 
 @jwt.invalid_token_loader #is called when the token send in the request ins't jwt (like a random string)
-	def invalid_token_callback(error):
-		return jsonify({
-			'descritpion': 'Signature verification failed',
-			'error': 'invalid_token'
-			}), 401
+def invalid_token_callback(error):
+	return jsonify({
+		'descritpion': 'Signature verification failed',
+		'error': 'invalid_token'
+		}), 401
 
 @jwt.unauthorized_loader #is called when the token isn't sent
-	def missing_token_callback(error):
-		return jsonify({
-			'descritpion': "request doesn't contain an access token",
-			'error': 'authorization_required'
-			}), 401
+def missing_token_callback(error):
+	return jsonify({
+		'descritpion': "request doesn't contain an access token",
+		'error': 'authorization_required'
+		}), 401
 
 @jwt.needs_fresh_token_loader #is called when the token isn't fresh and the request need a fresh token
-	def token_not_fresh_callback(error):
-		return jsonify({
-			'descritpion': 'the token is not fresh',
-			'error': 'fresh_token_required'
-			}), 401
+def token_not_fresh_callback():
+	return jsonify({
+		'descritpion': 'the token is not fresh',
+		'error': 'fresh_token_required'
+		}), 401
 
-@jwt.revoke_token_loader #is called when  you want to revoke a token (like when a user does a log out  or is in blacklist)
-	def revoked_token_callback(error):
-		return jsonify({
-			'descritpion': 'The token has been revoked',
-			'error': 'token_revoked'
-			}), 401
+@jwt.revoked_token_loader #is called when  you want to revoke a token (like when a user does a log out  or is in blacklist)
+def revoked_token_callback(error):
+	return jsonify({
+		'descritpion': 'The token has been revoked',
+		'error': 'token_revoked'
+		}), 401
 
 
 

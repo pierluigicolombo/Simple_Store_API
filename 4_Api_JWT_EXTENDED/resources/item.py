@@ -1,6 +1,5 @@
 from flask_restful import Resource, reqparse
-from flask_jwt_extended import 
-(
+from flask_jwt_extended import (
     jwt_required, 
     get_jwt_claims, 
     jwt_optional, 
@@ -77,7 +76,7 @@ class ItemList(Resource):
     @jwt_optional
     def get(self):
         user_id = get_jwt_identity() #get_jwt_identity returns what we save in the access token as identity. If it returns None it means that the user isn't logged
-        items = [x.json() fro x in ItemModel.find_all()]
+        items = [x.json() for x in ItemModel.find_all()]
         if user_id:
             return {'items': items}, 200
 
