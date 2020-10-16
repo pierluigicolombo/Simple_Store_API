@@ -22,5 +22,5 @@ The code in this section extends the previous section by replacing the manual in
 
 ## Api_JWT_Extended
 
-The code in this sections extends the previus section using jwt extended. With jwt exteded the api can handle login, token refresh, logout ...
+The code in this sections extends the previus section using jwt extended. With jwt exteded the api can handle login, token refresh, logout ... If you want to test you can import all the requests in postman from the file postman_collection.json
 The structure of the code is explain in the e-book at https://arac.tecladocode.com/
